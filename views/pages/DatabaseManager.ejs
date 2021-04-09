@@ -1,0 +1,129 @@
+<!--
+Name: Dennis Huynh
+Student Number: 301379204
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Assignment2</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+    
+    $(document).ready(function(){
+
+    var weight=[];
+    var height= [];
+    $(".weightData").each(function(){
+      weight.push($(this).text());
+    });
+
+    $(".heightData").each(function(){
+      height.push($(this).text());
+    });
+
+    $(".infodisplay").each(function(index){
+      $(this).width(parseInt(weight[index])+50);
+      $(this).height(parseInt(height[index])+100);
+    })
+
+    });
+
+    
+    </script>
+</head>
+<body>
+  <div class="bg-dark text-white p-1">
+    <div class= "container-fluid"><h1>Students Database Manager</h1></div>
+  </div>
+  <br />
+  <div class="container-fluid bg-light">
+    <h2>Add New Students</h2>
+    <form action="/add" method="POST">
+      <div class="form-group">
+        <label>Enter Student Name</label>
+        <input type ="text" class="form-control w-25 mb-3" name="name" id="name">
+        <label>Enter Student Weight</label>
+        <input type ="text" class="form-control w-25 mb-3" name="weight" id="weight">
+        <label>Enter Student Height</label>
+        <input type ="text" class="form-control w-25 mb-3" name="height" id="height">
+        <label>Enter Student Hair Color</label>
+        <input type ="text" class="form-control w-25 mb-3" name="hair" id="hair">
+        <label>Enter Student GPA</label>
+        <input type ="text" class="form-control w-25 mb-3" name="gpa" id="gpa">
+        <button type="submit" class="btn btn-dark">Add Student</button>
+      </div>
+    </form>
+  </div>
+  <br />
+  <div class="container-fluid bg-light">
+    <h2>Update Existing Students</h2>
+    <form action="/update" method="POST">
+      <div class="form-group">
+        <label>Select Student ID</label>
+        <select class="form-control w-25 mb-3" name="idList" id="idList">
+          <% results.forEach(function(r) { %>  
+          <option><%= r.id %></option>
+          <% }); %>
+          <!--Add the ID from database-->
+        </select>
+
+        <label>Select An Attriubte to Update</label>
+        <select class="form-control w-25 mb-3" name="infoList" id="infoList">
+            <option>name</option>
+            <option>weight</option>
+            <option>height</option>
+            <option>haircolor</option>
+            <option>gpa</option>
+        </select>
+
+        <label>Enter in New Value</label>
+        <input type ="text" class="form-control w-25 mb-3" name="update" id="update">
+        <button type="submit" class="btn btn-dark">Update Student</button>
+      </div>
+    </form>
+  </div>
+  <br />
+  <div class="container-fluid bg-light">
+    <h2>Delete Student Information</h2>
+    <form action="/delete" method="POST">
+      <label>Pick Which Student to Delete</label>
+      <div class="form-group">
+          <select class="form-control w-25 mb-3" name="deleteList" id="deleteList">
+              <% results.forEach(function(r) { %>  
+              <option><%= r.id %></option>
+              <% }); %>  
+          </select>
+          <button type="submit" class="btn btn-dark">Delete Student</button>
+      </div>
+    </form> 
+  </div>
+
+  <br />
+  <div class="container-fluid bg-light">
+    <h2>Display of all Students</h2>
+    <% results.forEach(function(r) { %>  
+      <div class="infodisplay border border-dark float-left m-1 p-2 text-center small">
+        ID: <%= r.id  %>
+        <br />
+        Name: <%= r.name  %>
+        <br />
+        Weight:<span class="weightData"><%= r.weight  %></span>
+        <br />
+        Height:<span class="heightData"><%= r.height  %></span>
+        <br />
+        Hair color:<%= r.haircolor %>
+        <br />
+        GPA:<%= r.gpa %>
+      </div>
+      <% }); %>  
+  </div>
+
+             
+</body>
+</html>
